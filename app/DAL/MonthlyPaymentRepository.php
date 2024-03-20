@@ -105,6 +105,63 @@ class MonthlyPaymentRepository extends Repository
         return $response;
     }
 
+    public function saveMonthlyHalfPaymentDetails($data)
+    {
+        try {
+            // Retrieve data from the request
+            $id = $data->id;
+            $customerId = intval($data->customer_id);
+            $dueAmount = $data->due_amount;
+            $totalAmount = $data->total_amount;
+            $halfPayment = $data->half_payment;
+            $newDueAmount = $data->new_due_amount;
+            $paymentDate = $data->payment_date;
+            $paymentOption = $data->payment_option;
+            $newHalfPayment =  $dueAmount + $halfPayment;
+
+            if ($totalAmount == $newHalfPayment) {
+                $paymentOption = 1; // if payment is full and
+            }
+
+            DB::beginTransaction();
+
+            $dataToBeInsert = [
+                'customer_id' => $customerId,
+                'payment_date' => $paymentDate,
+                'payment_option' => $paymentOption,
+                'due_amount' => $newDueAmount,
+                'half_payment' => $newHalfPayment,
+                // 'total_amount' => $totalAmount,
+            ];
+
+            if ($id && $customerId) {
+                $dataToBeInsert['updated_at'] = now();
+
+                DB::table('monthly_milk_payment')
+                    ->where('id', $id)
+                    ->where('customer_id', $customerId)
+                    ->update($dataToBeInsert);
+            }
+
+            DB::commit();
+
+            $response = response([
+                'status' => Response::HTTP_OK,
+                'message' => 'Data saved successfully.'
+            ]);
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of an error
+            DB::rollBack();
+
+            $response = response([
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => 'Something went wrong.'
+            ]);
+        }
+
+        return $response;
+    }
+
     public function getMonthlyPaymentDetails()
     {
         try {

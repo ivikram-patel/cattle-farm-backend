@@ -17,6 +17,10 @@ class MonthlyPaymentController extends Controller
     {
         return $this->monthlyPaymentRepo->saveMonthlyPaymentDetails($request);
     }
+    public function saveMonthlyHalfPaymentDetails(Request $request)
+    {
+        return $this->monthlyPaymentRepo->saveMonthlyHalfPaymentDetails($request);
+    }
     public function getMonthlyPaymentDetails()
     {
         return $this->monthlyPaymentRepo->getMonthlyPaymentDetails();

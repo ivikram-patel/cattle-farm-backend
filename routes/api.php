@@ -114,6 +114,7 @@ Route::delete('delete-single-payment/{id}', [SinglePaymentController::class, 'de
 
 // monthly payment
 Route::post('submit-monthly-payment', [MonthlyPaymentController::class, 'saveMonthlyPaymentDetails']);
+Route::post('submit-half-monthly-payment', [MonthlyPaymentController::class, 'saveMonthlyHalfPaymentDetails']);
 Route::get('monthly-payment-list', [MonthlyPaymentController::class, 'getMonthlyPaymentDetails']);
 Route::get('monthly-detail/{id}', [MonthlyPaymentController::class, 'getMonthlyPaymentDetailsById']);
 Route::delete('delete-monthly-payment/{id}', [MonthlyPaymentController::class, 'deleteMonthlyPayment']);
