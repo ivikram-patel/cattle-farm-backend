@@ -189,8 +189,6 @@ class CattleRepository extends Repository
             $cattleSellingPrice = $data->cattle_price;
             $cattleSellingTime = $data->sell_cattle_time;
             $note = $data->note;
-
-
             $carbonDate = Carbon::parse($cattleSellingTime);
             $month = $carbonDate->format('m');
 

@@ -129,6 +129,24 @@ Route::get('total-income', [IncomeController::class, 'getTotalIncome']);
 Route::get('customer-credit', [ListController::class, 'getCustomerCredit']);
 Route::get('income-expense-graph', [ListController::class, 'getIncomeExpenseGraphData']);
 
+Route::post('submit-cattle-birth', [ListController::class, 'saveCattleBirth']);
+Route::post('submit-cattle-insemination', [ListController::class, 'saveCattleInsemination']);
+Route::post('submit-cattle-pregnancy', [ListController::class, 'saveCattlePregnancy']);
+
+Route::get('cattle-birth-detail/{id}', [ListController::class, 'getCattleBirthDetail']);
+Route::get('cattle-insemination-detail/{id}', [ListController::class, 'getCattleInseminationDetail']);
+Route::get('cattle-pregnancy-detail/{id}', [ListController::class, 'getCattlePregnancyDetail']);
+
+
+Route::get('cattle-birth-list', [ListController::class, 'getCattleBirthList']);
+Route::get('cattle-insemination-list', [ListController::class, 'getCattleInseminationList']);
+Route::get('cattle-pregnancy-list', [ListController::class, 'getCattlePregnancyList']);
+
+
+Route::delete('delete-cattle-birth-detail/{id}', [ListController::class, 'deleteCattleBirth']);
+Route::delete('delete-cattle-insemination-detail/{id}', [ListController::class, 'deleteCattleInsemination']);
+Route::delete('delete-cattle-pregnancy-detail/{id}', [ListController::class, 'deleteCattlePregnancy']);
+
 
 
 // submit-income-category

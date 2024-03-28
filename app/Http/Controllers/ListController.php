@@ -63,4 +63,64 @@ class ListController extends Controller
     {
         return $this->listRepo->getIncomeExpenseGraphData();
     }
+
+    public function saveCattleBirth(Request $request)
+    {
+        return $this->listRepo->saveCattleBirth($request);
+    }
+
+    public function saveCattlePregnancy(Request $request)
+    {
+        return $this->listRepo->saveCattlePregnancy($request);
+    }
+
+    public function saveCattleInsemination(Request $request)
+    {
+        return $this->listRepo->saveCattleInsemination($request);
+    }
+
+    public function getCattleBirthDetail($id)
+    {
+        return $this->listRepo->getCattleBirthDetail($id);
+    }
+
+    public function getCattleInseminationDetail($id)
+    {
+        return $this->listRepo->getCattleInseminationDetail($id);
+    }
+
+    public function getCattlePregnancyDetail($id)
+    {
+        return $this->listRepo->getCattlePregnancyDetail($id);
+    }
+
+    public function getCattleBirthList()
+    {
+        return $this->listRepo->getCattleBirthList();
+    }
+
+    public function getCattleInseminationList()
+    {
+        return $this->listRepo->getCattleInseminationList();
+    }
+
+    public function getCattlePregnancyList()
+    {
+        return $this->listRepo->getCattlePregnancyList();
+    }
+
+    public function deleteCattleBirth($id)
+    {
+        return $this->listRepo->deleteCattleBirth($id);
+    }
+
+    public function deleteCattleInsemination($id)
+    {
+        return $this->listRepo->deleteCattleInsemination($id);
+    }
+
+    public function deleteCattlePregnancy($id)
+    {
+        return $this->listRepo->deleteCattlePregnancy($id);
+    }
 }
