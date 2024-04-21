@@ -24,9 +24,30 @@ class ListController extends Controller
     {
         return $this->listRepo->getCustomerDetail($id);
     }
+
+    public function getDoctorData($id)
+    {
+        return $this->listRepo->getDoctorData($id);
+    }
+
+    public function getEmployeeData($id)
+    {
+        return $this->listRepo->getEmployeeData($id);
+    }
+
     public function deleteCustomer($id)
     {
         return $this->listRepo->deleteCustomer($id);
+    }
+
+    public function deleteDoctor($id)
+    {
+        return $this->listRepo->deleteDoctor($id);
+    }
+
+    public function deleteEmployee($id)
+    {
+        return $this->listRepo->deleteEmployee($id);
     }
 
     public function getDoctorDetails()

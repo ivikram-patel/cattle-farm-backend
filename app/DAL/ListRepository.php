@@ -16,7 +16,7 @@ class ListRepository extends Repository
     public function getCustomersList()
     {
         try {
-            $listDetails = DB::table('customer')->orderBy('id', 'asc')->get();
+            $listDetails = DB::table('customer')->where('is_deleted', 0)->orderBy('id', 'asc')->get();
 
             // var_dump($listDetails);
 
@@ -47,7 +47,7 @@ class ListRepository extends Repository
     public function getEmployeeDetails()
     {
         try {
-            $listDetails = DB::table('employee')->orderBy('id', 'asc')->get();
+            $listDetails = DB::table('employee')->where('is_deleted', 0)->orderBy('id', 'asc')->get();
 
             if ($listDetails->isEmpty()) {
                 return response([
@@ -72,10 +72,11 @@ class ListRepository extends Repository
             ]);
         }
     }
+
     public function getDoctorDetails()
     {
         try {
-            $listDetails = DB::table('doctor')->orderBy('id', 'asc')->get();
+            $listDetails = DB::table('doctor')->where('is_deleted', 0)->orderBy('id', 'asc')->get();
 
             // var_dump($listDetails);
 
@@ -117,6 +118,7 @@ class ListRepository extends Repository
             $surname = $data->surname;
             $gender = $data->gender;
 
+
             $dataToBeInsert = [
                 'first_name' => $firstName,
                 'middle_name' => $middleName,
@@ -125,6 +127,7 @@ class ListRepository extends Repository
                 'phone_no' => $phoneNo,
                 'address' => $address,
                 'quantity' => $milkQuantity,
+                'is_deleted' => 0
             ];
 
 
@@ -170,6 +173,7 @@ class ListRepository extends Repository
                 'gender' => $gender,
                 'phone_no' => $phoneNo,
                 'address' => $address,
+                'is_deleted' => 0
             ];
 
 
@@ -216,6 +220,7 @@ class ListRepository extends Repository
                 'gender' => $gender,
                 'phone_no' => $phoneNo,
                 'address' => $address,
+                'is_deleted' => 0
             ];
 
 
@@ -263,25 +268,49 @@ class ListRepository extends Repository
         }
     }
 
-    public function deleteCustomer($id)
+    public function getEmployeeData($id)
     {
         try {
-            DB::beginTransaction();
-
-            DB::table('customer')
+            $foodDetail = DB::table('employee')
                 ->where('id', $id)
-                ->delete();
+                ->first();
 
-            DB::commit();
+            if ($foodDetail) {
 
-            return response()->json(['message' => 'Customer deleted successfully'], 200);
+                return response()->json([
+                    'data' => $foodDetail,
+                    'status' => 200
+                ]);
+            } else {
+                return response()->json(['error' => 'Record not found'], 404);
+            }
         } catch (\Exception $e) {
-            DB::rollback();
-
-            // Log the error or handle it as needed
-            return response()->json(['error' => 'Unable to delete Customer data', 'message' => $e->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getDoctorData($id)
+    {
+        try {
+            $foodDetail = DB::table('doctor')
+                ->where('id', $id)
+                ->first();
+
+            if ($foodDetail) {
+
+                return response()->json([
+                    'data' => $foodDetail,
+                    'status' => 200
+                ]);
+            } else {
+                return response()->json(['error' => 'Record not found'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
 
     public function getCustomerCredit()
     {
@@ -559,7 +588,6 @@ class ListRepository extends Repository
         return $response;
     }
 
-
     public function getCattleBirthList()
     {
         try {
@@ -695,6 +723,65 @@ class ListRepository extends Repository
         }
     }
 
+    public function deleteCustomer($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('customer')
+                ->where('id', $id)
+                ->update(['is_deleted' => 1]);
+            DB::commit();
+
+            return response()->json(['message' => 'Customer deleted successfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            // Log the error or handle it as needed
+            return response()->json(['error' => 'Unable to delete Customer data', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteDoctor($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('doctor')
+                ->where('id', $id)
+                ->update(['is_deleted' => 1]);
+            DB::commit();
+
+            return response()->json(['message' => 'Data deleted successfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            // Log the error or handle it as needed
+            return response()->json(['error' => 'Unable to delete data', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteEmployee($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('employee')
+                ->where('id', $id)
+                ->update(['is_deleted' => 1]);
+
+            DB::commit();
+
+            return response()->json(['message' => 'Employee deleted successfully'], 200);
+        } catch (\Exception $e) {
+            var_dump($e);
+            DB::rollback();
+
+            // Log the error or handle it as needed
+            return response()->json(['error' => 'Unable to delete Employee data', 'message' => $e->getMessage()], 500);
+        }
+    }
+
     public function deleteCattleBirth($id)
     {
         try {
@@ -716,7 +803,6 @@ class ListRepository extends Repository
         }
     }
 
-
     public function deleteCattleInsemination($id)
     {
         try {
@@ -736,7 +822,6 @@ class ListRepository extends Repository
             return response()->json(['error' => 'Unable to delete data', 'message' => $e->getMessage()], 500);
         }
     }
-
 
     public function deleteCattlePregnancy($id)
     {

@@ -73,6 +73,7 @@ class IncomeRepository extends Repository
             ]);
         } catch (\Exception $e) {
 
+            // var_dump($e->getMessage());
             Log::error('Unexpected error in List: ' . $e->getMessage());
 
             return response([
@@ -270,6 +271,7 @@ class IncomeRepository extends Repository
         try {
 
             $currentMonth = Carbon::now()->month;
+            
             $sellCattleExpense = DB::table('sell_cattle')->where('is_deleted', 0)->where('month', $currentMonth)->get();
 
             $totalSellCattleExpense = 0.00;

@@ -117,7 +117,7 @@ class MonthlyPaymentRepository extends Repository
             $newDueAmount = $data->new_due_amount;
             $paymentDate = $data->payment_date;
             $paymentOption = $data->payment_option;
-            $newHalfPayment =  $dueAmount + $halfPayment;
+            $newHalfPayment =  $dueAmount + $halfPayment;   
 
             if ($totalAmount == $newHalfPayment) {
                 $paymentOption = 1; // if payment is full and

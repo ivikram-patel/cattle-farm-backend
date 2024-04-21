@@ -42,10 +42,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('admin-login', [LoginController::class, 'adminLogin']);
 Route::post('advisor-login', [LoginController::class, 'advisorLogin']);
+
 Route::get('employee-details', [ListController::class, 'getEmployeeDetails']);
+Route::get('employee-detail/{id}', [ListController::class, 'getEmployeeData']);
 Route::post('submit-employee-details', [ListController::class, 'saveEmployeeDetails']);
+Route::delete('delete-employee-detail/{id}', [ListController::class, 'deleteEmployee']);
+
+
 Route::get('doctor-details', [ListController::class, 'getDoctorDetails']);
+Route::get('doctor-detail/{id}', [ListController::class, 'getDoctorData']);
 Route::post('submit-doctor-details', [ListController::class, 'saveDoctorDetails']);
+Route::delete('delete-doctor-detail/{id}', [ListController::class, 'deleteDoctor']);
+
 
 Route::get('customer-details', [ListController::class, 'getCustomersList']);
 Route::post('submit-customer-details', [ListController::class, 'saveCustomerDetails']);
@@ -146,77 +154,3 @@ Route::get('cattle-pregnancy-list', [ListController::class, 'getCattlePregnancyL
 Route::delete('delete-cattle-birth-detail/{id}', [ListController::class, 'deleteCattleBirth']);
 Route::delete('delete-cattle-insemination-detail/{id}', [ListController::class, 'deleteCattleInsemination']);
 Route::delete('delete-cattle-pregnancy-detail/{id}', [ListController::class, 'deleteCattlePregnancy']);
-
-
-
-// submit-income-category
-// cattle re-production...
-
-
-
-
-
-//KYC ROUTER
-// Route::get('user-all-assets', [AssetClassBreakdownController::class, 'getUserAllAsset']);
-// Route::get('kyc/client-accounts/{accountType}', [ClientAccountController::class, 'getClientAccounts']);
-// Route::get('kyc/user-log-history/{userId}', [UserLogController::class, 'getUserLogHistory']);
-// Route::get('kyc/user-log-data/{userId}/{logId}', [UserLogController::class, 'getUserLogData']);
-// Route::get('province-list', [CommonController::class, 'getAllProvince']);
-// Route::get('user-list', [ClientFormController::class, 'getUserList']);
-// Route::get('advisor-list', [CommonController::class, 'getAllAdvisor']);
-/* // used of  question mark means: The '{userId?}' parameter is optional in the URL.  */
-// Route::get('user-profile-details/{userId?}', [ClientFormController::class, 'getProfileDetails']);
-// Route::get('user-questionnaire/{userId?}', [ClientFormController::class, 'getUserQuestionnaireDetails']);
-// Route::get('spouse-details/{id}', [ClientFormController::class, 'getSpouseDetails']);
-// Route::post('upload-void-cheque/{docId}/{userId}', [ClientFormController::class, 'uploadVoidChequeFile']);
-// Route::delete('delete_profile_document/{docType}/{userId}', [ClientFormController::class, 'deleteProfileDocument']);
-// Route::post('user-recommended-portfolio', [ClientFormController::class, 'recommendedPortfolio']);
-// Route::post('save-profile-data/{userId}', [ClientFormController::class, 'saveProfileData']);
-
-// client account routes
-// Route::get('client-form-docs/{formId}/{subFormId}', [ClientAccountController::class, 'getFormDocuments']);
-// Route::get('client-form-accounts', [ClientAccountController::class, 'getFormAccounts']);
-// // Route::post('download-agreement', [ClientFormController::class, 'downloadClientForms']);
-// Route::post('download-agreement', [ClientFormController::class, 'downloadClientForms']);
-// // Route::get('download-rpc-pdf/{userId}', [ClientFormController::class, 'downloadRpcPdf']);
-// // Route::get('download-account-rpc-pdf/{userId}', [PersonalController::class, 'downloadAccountRpcPdf']);
-// Route::get('user-account-number/{userId}', [PersonalController::class, 'getUserAccountNumber']);
-// Route::get('user-fees-scheduled', [PersonalController::class, 'getFeesScheduled']);
-// Route::get('account-details/{accountNumber}', [PersonalController::class, 'getAccountDetail']);
-// Route::get('user-account-details/{userId}/{accountNumber?}', [PersonalController::class, 'getUserAccountDetail']);
-// Route::post('add-user-account', [PersonalController::class, 'addUserAccount']);
-// Route::post('edit-user-account', [PersonalController::class, 'editUserAccount']);
-// Route::post('remove-user-account', [PersonalController::class, 'removeUserAccount']);
-// Route::post('submit-risk-assessment', [PersonalController::class, 'submitRiskAssessment']);
-// Route::get('annual-report-year', [ClientAccountController::class, 'getAnnualReportYear']);
-// Route::get('user-annual-report/{year}', [ClientAccountController::class, 'getAnnualReports']);
-// Route::get('download-annual-report/{userId}/{docId}', [DownloadController::class, 'downloadAnnualReport']);
-
-
-// ------------------------------------ADMIN ROUTES ------------------------------------- //
-
-// Route::get('asset-categories-details', [AssetCategoryController::class, 'getAssetCategories']);
-// Route::get('asset_category/{id}', [AssetCategoryController::class, 'getAssetCategory']);
-// Route::post('submit-asset-category', [AssetCategoryController::class, 'saveAssetCategory']);
-// Route::delete('delete-asset-category/{id}', [AssetCategoryController::class, 'deleteAssetCategory']);
-
-// Route::get('asset-class-details', [AssetClassController::class, 'getAssetClassDetails']);
-// Route::get('asset-class/{id}', [AssetClassController::class, 'getAssetClass']);
-// Route::post('submit-asset-class', [AssetClassController::class, 'saveAssetClass']);
-// Route::delete('delete_asset_class/{id}', [AssetClassController::class, 'deleteAssetClass']);
-
-// Route::get('security-details', [SecurityController::class, 'getSecurityDetails']);
-// Route::get('security/{id}', [SecurityController::class, 'getSecurityInfoById']);
-// Route::post('submit-security', [SecurityController::class, 'saveSecurity']);
-// Route::delete('delete-security/{id}', [SecurityController::class, 'deleteSecurity']);
-
-// Route::get('portfolio-details', [PortfolioController::class, 'getPortfolioDetails']);
-// Route::get('portfolio-category-allocation', [PortfolioController::class, 'getPortfolioAllocation']);
-// Route::get('security-price-history/{symbol}', [PortfolioController::class, 'getSecurityPriceHistory']);
-// Route::post('update_security_price', [PortfolioController::class, 'updateSecurityPrice']);
-// Route::delete('delete_security_class/{id}', [PortfolioController::class, 'deleteSecurityClass']);
-// Route::get('security_categories/{id}', [PortfolioController::class, 'getSecurityCategories']);
-// Route::post('add-security-category', [PortfolioController::class, 'saveSecurityCategory']);
-// Route::get('fetch-category-security/{id}', [PortfolioController::class, 'getSecurityCategory']);
-// Route::get('portfolio_category_details/{id}/{typeid}', [PortfolioController::class, 'getPortfolioCategoryDetails']);
-// Route::get('question_score_details/{id}/{typeid}', [PortfolioController::class, 'getQuestionScoreDetails']);
