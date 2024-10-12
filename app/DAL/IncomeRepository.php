@@ -73,7 +73,7 @@ class IncomeRepository extends Repository
             ]);
         } catch (\Exception $e) {
 
-            // var_dump($e->getMessage());
+            var_dump($e->getMessage());
             Log::error('Unexpected error in List: ' . $e->getMessage());
 
             return response([

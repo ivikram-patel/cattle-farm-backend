@@ -200,8 +200,8 @@ class MonthlyPaymentRepository extends Repository
                 $cumulativeDueAmounts[$customerId] = ($cumulativeDueAmounts[$customerId] ?? 0) + $remainingAmount;
 
                 // Format payment date
-                $paymentFormattedDate = Carbon::createFromFormat('Y-m-d H:i:s', $value->payment_date)->format('Y-m-d');
-                $paymentFormattedDate1 = Carbon::createFromFormat('Y-m-d H:i:s', $value->payment_date)->format('F-Y');
+                $paymentFormattedDate = Carbon::createFromFormat('Y-m-d', $value->payment_date)->format('Y-m-d');
+                $paymentFormattedDate1 = Carbon::createFromFormat('Y-m-d', $value->payment_date)->format('F-Y');
 
                 // Create an array for the current milk payment record
                 $record = [

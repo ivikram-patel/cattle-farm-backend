@@ -307,7 +307,7 @@ class ExpenseRepository extends Repository
             ]);
         } catch (\Exception $e) {
 
-            // var_dump($e->getMessage());
+            var_dump($e->getMessage());
 
             $response = response([
                 'status' => 404,

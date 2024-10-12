@@ -121,7 +121,7 @@ class FoodDetailsRepository extends Repository
 
             $response = response([
                 'status' => Response::HTTP_OK,
-                'message' => 'Data Saved successfully.'
+                'message' => 'Data deleted successfully.'
             ]);
 
             DB::commit();
