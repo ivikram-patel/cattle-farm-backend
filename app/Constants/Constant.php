@@ -65,7 +65,30 @@ class Constant
 
 
     const COLOR_ARRAY_PDF = [
-        "#132575", "#FFBB0F", "#B80241", "#262626", "#3C3C3C", "#E3E2E2", "#D1D0D0", "#F4F4F4", "#a5a7a6", "#aaaaaa", "#c0c0c0", "#e6e6e6", "#132575", "#FFBB0F", "#B80241", "#262626", "#3C3C3C", "#E3E2E2", "#D1D0D0", "#F4F4F4", "#a5a7a6", "#aaaaaa", "#c0c0c0", "#e6e6e6"
+        "#132575",
+        "#FFBB0F",
+        "#B80241",
+        "#262626",
+        "#3C3C3C",
+        "#E3E2E2",
+        "#D1D0D0",
+        "#F4F4F4",
+        "#a5a7a6",
+        "#aaaaaa",
+        "#c0c0c0",
+        "#e6e6e6",
+        "#132575",
+        "#FFBB0F",
+        "#B80241",
+        "#262626",
+        "#3C3C3C",
+        "#E3E2E2",
+        "#D1D0D0",
+        "#F4F4F4",
+        "#a5a7a6",
+        "#aaaaaa",
+        "#c0c0c0",
+        "#e6e6e6"
     ];
     const DATA_FOLDER =  'data/';
     const REMITTANCE_FOLDER =  'remittance_sheet/';
@@ -80,5 +103,5 @@ class Constant
     const ANNUAL_REPORT_FOLDER = 'annual_report/';
     const RISK_ASSESSMENT_FILE = 'risk_assessment_';
     const RECOMMENDED_PORTFOLIO_COMPOSITION = 'recommended_portfolio_composition.pdf';
-    const MAX_LOGIN_ATTEMPT = 10;
+    const MAX_LOGIN_ATTEMPT = 5;
 }

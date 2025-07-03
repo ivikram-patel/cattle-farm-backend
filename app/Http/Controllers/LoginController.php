@@ -191,6 +191,73 @@ class LoginController extends Controller
         ]);
     }
 
+    public function userLogin(Request $request)
+    {
+        try {
+            $email = $request->input('email');
+            $password = $request->input('password');
+            $currentTime = now();
+            $maxLoginAttempt = Constant::MAX_LOGIN_ATTEMPT;
+
+            $userDetails = $this->common->getDataByEmail($email, 'users');
+
+            if (!empty($userDetails->first_name)) {
+                $loginAttempt = (int)$userDetails->login_attempt;
+                $lastLoginAttemptTime = $userDetails->last_login_attempt_time;
+
+                if ($loginAttempt < $maxLoginAttempt) {
+                    $user = DB::table('users')
+                        ->select('id', 'email', 'first_name', 'last_name', 'password')
+                        ->where('email', $email)
+                        ->first();
+
+                    if ($user) {
+                        if (Hash::check($password, $user->password)) {
+                            $resData['id'] = (int)$user->id;
+                            $resData['name'] = $user->first_name . ' ' . $user->last_name;
+                            Session::put('userID', (int)$user->id);
+                            Session::put('userType', 'user');
+                            $resData['status'] = 'success';
+                        } else {
+                            $loginAttempt += 1;
+                            $this->updateLoginAttempt($email, $loginAttempt, $currentTime, 'users');
+
+                            $resData['message'] = 'You have entered an incorrect password.';
+                            $resData['status'] = 'error';
+
+                            if ($loginAttempt > 4) {
+                                $remainingLoginAttempt = $maxLoginAttempt - $loginAttempt;
+                                $resData['message'] = "You have entered an incorrect password.<br/>Attempts remaining are $remainingLoginAttempt.";
+                                $resData['status'] = 'max_limit_error';
+                            }
+                        }
+                    }
+                } else {
+                    $lastAttemptAfter24Hours = Carbon::parse($lastLoginAttemptTime, 'Canada/Eastern')->addHours(25);
+                    $diffHours = $lastAttemptAfter24Hours->diffInHours($currentTime);
+
+                    if ($currentTime->isAfter($lastAttemptAfter24Hours)) {
+                        $this->updateLoginAttempt($email, 0, $currentTime, 'users');
+                        $resData['status'] = 'error';
+                        $resData['message'] = 'You have entered an incorrect password.';
+                    } else {
+                        $resData['status'] = 'max_limit_error';
+                        $resData['message'] = "Your account is locked due to multiple incorrect password attempts. Please try again after $diffHours hours. You may use the Forgot Password option to enable your account.";
+                    }
+                }
+            } else {
+                $resData['status'] = 'error';
+                $resData['message'] = 'Invalid user name or password.';
+            }
+
+            return response($resData);
+
+        } catch (\Exception $e) {
+            throw $e->getMessage();
+        }
+    }
+
+
     private function updateLoginAttempt($email, $loginAttempt, $currentTime, $table)
     {
         // Update the login_attempt and last_login_attempt_time in the advisors table

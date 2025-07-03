@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('admin-login', [LoginController::class, 'adminLogin']);
 Route::post('advisor-login', [LoginController::class, 'advisorLogin']);
+Route::post('user-login', [LoginController::class, 'userLogin']);
 
 Route::get('employee-details', [ListController::class, 'getEmployeeDetails']);
 Route::get('employee-detail/{id}', [ListController::class, 'getEmployeeData']);

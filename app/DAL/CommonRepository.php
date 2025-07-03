@@ -55,4 +55,15 @@ class CommonRepository
 
         return $queryPrice ? (float)$queryPrice->rate : 0;
     }
+
+    public function getDataByEmail($email, $table)
+    {
+        $query = DB::table($table)
+            ->select('*')
+            ->where('email', $email)
+            ->first();
+
+        return $query;
+    }   
+   
 }
